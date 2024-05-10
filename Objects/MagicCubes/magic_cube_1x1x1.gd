@@ -4,6 +4,7 @@ extends Node3D
 
 
 const COLORED_SHADER: Shader = preload("res://Shaders/colored_shader.gdshader")
+const FACE_NAMES: PackedStringArray = ["right", "up", "front", "left", "down", "back"]
 
 
 @export var color := Color.BLACK: set = set_color
@@ -113,9 +114,6 @@ const COLORED_SHADER: Shader = preload("res://Shaders/colored_shader.gdshader")
 		_update_faces_visible()
 
 
-var _face_names: PackedStringArray = ["right", "up", "front", "left", "down", "back"]
-
-
 func _ready() -> void:
 	var cube := MeshInstance3D.new()
 	cube.mesh = BoxMesh.new()
@@ -126,7 +124,7 @@ func _ready() -> void:
 	cube.name = "cube"
 	add_child(cube)
 
-	for face_name in _face_names:
+	for face_name in FACE_NAMES:
 		var face := MeshInstance3D.new()
 		face.mesh = BoxMesh.new()
 		face.mesh.material = ShaderMaterial.new()
@@ -154,7 +152,7 @@ func set_size(value: Vector3) -> void:
 		await ready
 	var cube: MeshInstance3D = get_node("cube")
 	cube.mesh.size = value
-	for face_name in _face_names:
+	for face_name in FACE_NAMES:
 		set(face_name + "_position", get(face_name + "_position") * value / old_size)
 		set(face_name + "_size", get(face_name + "_size") * value / old_size)
 
@@ -162,7 +160,7 @@ func set_size(value: Vector3) -> void:
 func _update_faces_color() -> void:
 	if not is_node_ready():
 		await ready
-	for face_name in _face_names:
+	for face_name in FACE_NAMES:
 		var face: MeshInstance3D = get_node("cube/" + face_name)
 		face.mesh.material.set_shader_parameter("color", get(face_name + "_color"))
 
@@ -170,7 +168,7 @@ func _update_faces_color() -> void:
 func _update_faces_position() -> void:
 	if not is_node_ready():
 		await ready
-	for face_name in _face_names:
+	for face_name in FACE_NAMES:
 		var face: MeshInstance3D = get_node("cube/" + face_name)
 		face.position = get(face_name + "_position")
 
@@ -178,7 +176,7 @@ func _update_faces_position() -> void:
 func _update_faces_size() -> void:
 	if not is_node_ready():
 		await ready
-	for face_name in _face_names:
+	for face_name in FACE_NAMES:
 		var face: MeshInstance3D = get_node("cube/" + face_name)
 		face.mesh.size = get(face_name + "_size")
 
@@ -186,6 +184,6 @@ func _update_faces_size() -> void:
 func _update_faces_visible() -> void:
 	if not is_node_ready():
 		await ready
-	for face_name in _face_names:
+	for face_name in FACE_NAMES:
 		var face: MeshInstance3D = get_node("cube/" + face_name)
 		face.visible = get(face_name + "_visible")
