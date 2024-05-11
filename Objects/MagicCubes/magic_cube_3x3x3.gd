@@ -2,7 +2,6 @@
 class_name MagicCube3x3x3
 extends Node3D
 
-
 @export var color := Color.BLACK: set = set_color
 @export var size := 1.0: set = set_size
 @export_group("Face")
@@ -52,6 +51,7 @@ func _ready() -> void:
 				cube111.down_visible = y == -1
 				cube111.back_visible = z == -1
 				add_child(cube111)
+
 
 
 func set_color(value: Color) -> void:

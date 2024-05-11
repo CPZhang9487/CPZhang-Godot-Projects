@@ -3,7 +3,7 @@ class_name MagicCube1x1x1
 extends Node3D
 
 
-const COLORED_SHADER: Shader = preload("res://Shaders/colored_shader.gdshader")
+const CUBE_SHADER: Shader = preload("res://Objects/MagicCubes/cube_shader.gdshader")
 const FACE_NAMES: PackedStringArray = ["right", "up", "front", "left", "down", "back"]
 
 
@@ -118,7 +118,7 @@ func _ready() -> void:
 	var cube := MeshInstance3D.new()
 	cube.mesh = BoxMesh.new()
 	cube.mesh.material = ShaderMaterial.new()
-	cube.mesh.material.shader = COLORED_SHADER
+	cube.mesh.material.shader = CUBE_SHADER
 	cube.mesh.material.set_shader_parameter("color", color)
 	cube.mesh.size = size
 	cube.name = "cube"
@@ -128,7 +128,7 @@ func _ready() -> void:
 		var face := MeshInstance3D.new()
 		face.mesh = BoxMesh.new()
 		face.mesh.material = ShaderMaterial.new()
-		face.mesh.material.shader = COLORED_SHADER
+		face.mesh.material.shader = CUBE_SHADER
 		face.mesh.material.set_shader_parameter("color", get(face_name + "_color"))
 		face.mesh.size = get(face_name + "_size")
 		face.name = face_name

@@ -8,3 +8,8 @@ void fragment() {
 	ALBEDO = color.rgb;
 	ALPHA = color.a;
 }
+
+
+void light() {
+	DIFFUSE_LIGHT = vec3(1.0, 1.0, 1.0);
+}
