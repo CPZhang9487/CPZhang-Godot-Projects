@@ -1,7 +1,7 @@
 [gd_scene load_steps=3 format=3 uid="uid://bxfrl3b8huxah"]
 
 [ext_resource type="Script" path="res://Objects/MagicCubes/magic_cube_3x3x3.gd" id="2_5rcek"]
-[ext_resource type="PackedScene" uid="uid://bj5wco84tasyu" path="res://Tools/cube_looker/cube_looker.tscn" id="3_v74og"]
+[ext_resource type="Script" path="res://Tools/CubeLooker/cube_looker.gd" id="2_cil3o"]
 
 [node name="Test3D" type="Node3D"]
 
@@ -11,7 +11,8 @@ transform = Transform3D(-0.866023, -0.433016, 0.250001, 0, 0.499998, 0.866027, -
 [node name="MagicCube3x3x3" type="Node3D" parent="."]
 script = ExtResource("2_5rcek")
 
-[node name="CubeLooker" parent="MagicCube3x3x3" instance=ExtResource("3_v74og")]
+[node name="CubeLooker" type="Node3D" parent="MagicCube3x3x3"]
+script = ExtResource("2_cil3o")
 
 [node name="Camera3D" type="Camera3D" parent="."]
 transform = Transform3D(0.707107, -0.5, 0.5, 0, 0.707107, 0.707107, -0.707107, -0.5, 0.5, 2, 2, 2)
