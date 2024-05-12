@@ -16,9 +16,6 @@ extends Node3D
 @export var left_image_cube_coord := Vector2i(0, 1)
 @export var down_image_cube_coord := Vector2i(1, 2)
 @export var back_image_cube_coord := Vector2i(3, 1)
-@export var _save_cube_image := false:
-	set(value):
-		save_cube_image()
 @export_group("Viewport")
 @export var viewport_size := Vector2i(512, 512):
 	set(value):
@@ -106,13 +103,7 @@ func _ready() -> void:
 	_update_cameras_size()
 
 
-func _input(event: InputEvent) -> void:
-	if event is InputEventKey:
-		if event.keycode == KEY_SPACE and not event.pressed:
-			save_cube_image()
-
-
-func save_cube_image() -> void:
+func get_cube_image() -> Image:
 	var sub_viewport_container: SubViewportContainer = get_node("sub_viewport_container")
 	sub_viewport_container.position -= sub_viewport_container.size
 	sub_viewport_container.visible = true
@@ -126,9 +117,9 @@ func save_cube_image() -> void:
 			Rect2i(Vector2.ZERO, viewport_size),
 			get(face_name + "_image_cube_coord") * viewport_size
 		)
-	image.save_png("res://Tools/CubeLooker/cube.png")
 	sub_viewport_container.position += sub_viewport_container.size
 	sub_viewport_container.visible = false
+	return image
 
 
 func _update_cameras_near() -> void:

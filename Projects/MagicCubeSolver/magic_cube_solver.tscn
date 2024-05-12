@@ -1,0 +1,56 @@
+[gd_scene load_steps=4 format=3 uid="uid://jipgh8nsi8ev"]
+
+[ext_resource type="Script" path="res://Objects/MagicCubes/magic_cube_3x3x3.gd" id="1_llakn"]
+[ext_resource type="Script" path="res://Projects/MagicCubeSolver/magic_cube_solver.gd" id="1_tyspt"]
+[ext_resource type="Script" path="res://Objects/MagicCubes/CubeLooker/cube_looker.gd" id="2_frim1"]
+
+[node name="MagicCubeSolver" type="Control"]
+layout_mode = 3
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+script = ExtResource("1_tyspt")
+
+[node name="PanelContainer" type="PanelContainer" parent="."]
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+
+[node name="MarginContainer" type="MarginContainer" parent="PanelContainer"]
+layout_mode = 2
+theme_override_constants/margin_left = 20
+theme_override_constants/margin_top = 20
+theme_override_constants/margin_right = 20
+theme_override_constants/margin_bottom = 20
+
+[node name="SubViewportContainer" type="SubViewportContainer" parent="PanelContainer/MarginContainer"]
+custom_minimum_size = Vector2(512, 512)
+layout_mode = 2
+size_flags_horizontal = 0
+size_flags_vertical = 8
+stretch = true
+
+[node name="SubViewport" type="SubViewport" parent="PanelContainer/MarginContainer/SubViewportContainer"]
+handle_input_locally = false
+render_target_update_mode = 4
+
+[node name="DirectionalLight3D" type="DirectionalLight3D" parent="PanelContainer/MarginContainer/SubViewportContainer/SubViewport"]
+transform = Transform3D(-0.866024, -0.433016, 0.250001, 0, 0.499998, 0.866026, -0.500003, 0.749999, -0.43301, 0, 0, 0)
+
+[node name="Camera3D" type="Camera3D" parent="PanelContainer/MarginContainer/SubViewportContainer/SubViewport"]
+transform = Transform3D(0.707107, -0.5, 0.5, 0, 0.707107, 0.707107, -0.707107, -0.5, 0.5, 1, 1, 1)
+current = true
+
+[node name="MagicCube3x3x3" type="Node3D" parent="PanelContainer/MarginContainer/SubViewportContainer/SubViewport"]
+unique_name_in_owner = true
+transform = Transform3D(1, 0, 0, 0, 0.999995, 0, 0, 0, 0.999996, 0, 0, 0)
+script = ExtResource("1_llakn")
+
+[node name="CubeLooker" type="Node3D" parent="PanelContainer/MarginContainer/SubViewportContainer/SubViewport/MagicCube3x3x3"]
+unique_name_in_owner = true
+script = ExtResource("2_frim1")

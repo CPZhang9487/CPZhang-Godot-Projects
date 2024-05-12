@@ -37,7 +37,14 @@ extends Node3D
 		_update_faces_color()
 
 
+var _is_turning := false
+
+
 func _ready() -> void:
+	var pivot := Node3D.new()
+	pivot.name = "pivot"
+	add_child(pivot)
+
 	for x in range(-1, 2):
 		for y in range(-1, 2):
 			for z in range(-1, 2):
@@ -51,7 +58,6 @@ func _ready() -> void:
 				cube111.down_visible = y == -1
 				cube111.back_visible = z == -1
 				add_child(cube111)
-
 
 
 func set_color(value: Color) -> void:
@@ -72,6 +78,45 @@ func set_size(value: float) -> void:
 		if child is MagicCube1x1x1:
 			child.position *= value / old_size
 			child.size = Vector3.ONE * value / 3.0
+
+
+func turn(code: String) -> void:
+	if _is_turning:
+		return
+	_is_turning = true
+	code = code.to_upper()
+	var cube_filter: Callable = func(child): return false
+	var pivot_rotation := Vector3.ZERO
+	if code == "R":
+		cube_filter = func(child): return child is MagicCube1x1x1 and is_equal_approx(child.position.x, size / 3)
+		pivot_rotation = Vector3(-1, 0, 0) * PI / 2
+	elif code == "U":
+		cube_filter = func(child): return child is MagicCube1x1x1 and is_equal_approx(child.position.y, size / 3)
+		pivot_rotation = Vector3(0, -1, 0) * PI / 2
+	elif code == "F":
+		cube_filter = func(child): return child is MagicCube1x1x1 and is_equal_approx(child.position.z, size / 3)
+		pivot_rotation = Vector3(0, 0, -1) * PI / 2
+	elif code == "L":
+		cube_filter = func(child): return child is MagicCube1x1x1 and is_equal_approx(child.position.x, -size / 3)
+		pivot_rotation = Vector3(1, 0, 0) * PI / 2
+	elif code == "D":
+		cube_filter = func(child): return child is MagicCube1x1x1 and is_equal_approx(child.position.y, -size / 3)
+		pivot_rotation = Vector3(0, 1, 0) * PI / 2
+	elif code == "B":
+		cube_filter = func(child): return child is MagicCube1x1x1 and is_equal_approx(child.position.z, -size / 3)
+		pivot_rotation = Vector3(0, 0, 1) * PI / 2
+	var pivot: Node3D = get_node("pivot")
+	for cube in get_children().filter(cube_filter):
+		cube.reparent(pivot)
+	var tween: Tween = create_tween()
+	tween.tween_property(pivot, "rotation", pivot_rotation, 0.5).as_relative()
+	tween.tween_callback(func():
+		for cube in pivot.get_children():
+			cube.reparent(self)
+		pivot.rotation = Vector3.ZERO
+		_is_turning = false
+	)
+
 
 
 func _update_faces_color() -> void:
