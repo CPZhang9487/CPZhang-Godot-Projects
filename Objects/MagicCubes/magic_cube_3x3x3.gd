@@ -2,6 +2,7 @@
 class_name MagicCube3x3x3
 extends Node3D
 
+
 @export var color := Color.BLACK: set = set_color
 @export var size := 1.0: set = set_size
 @export_group("Face")
@@ -84,6 +85,8 @@ func turn(code: String) -> void:
 	if _is_turning:
 		return
 	_is_turning = true
+	if not is_node_ready():
+		await ready
 	code = code.to_upper()
 	var cube_filter: Callable = func(child): return false
 	var pivot_rotation := Vector3.ZERO
@@ -108,15 +111,14 @@ func turn(code: String) -> void:
 	var pivot: Node3D = get_node("pivot")
 	for cube in get_children().filter(cube_filter):
 		cube.reparent(pivot)
-	var tween: Tween = create_tween()
-	tween.tween_property(pivot, "rotation", pivot_rotation, 0.5).as_relative()
-	tween.tween_callback(func():
+	var _turn_tween = create_tween()
+	_turn_tween.tween_property(pivot, "rotation", pivot_rotation, 0.5).as_relative()
+	_turn_tween.tween_callback(func():
 		for cube in pivot.get_children():
 			cube.reparent(self)
 		pivot.rotation = Vector3.ZERO
 		_is_turning = false
 	)
-
 
 
 func _update_faces_color() -> void:

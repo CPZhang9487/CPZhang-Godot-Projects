@@ -9,7 +9,6 @@ shader_parameter/rotation_y = 0.0
 shader_parameter/rotation_z = 0.0
 
 [sub_resource type="CompressedTexture2D" id="CompressedTexture2D_83nqc"]
-load_path = "res://.godot/imported/cube.png-319ba2dd3d58f71e499d3d9bfa155ddd.ctex"
 
 [node name="Test2D" type="Node2D"]
 position = Vector2(463, 167)
