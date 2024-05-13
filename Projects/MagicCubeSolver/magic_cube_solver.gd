@@ -18,10 +18,28 @@ extends Control
 @onready var cube_looker: CubeLooker = %CubeLooker
 
 
+func _input(event: InputEvent) -> void:
+	if event is InputEventKey:
+		if not event.pressed:
+			if event.keycode == KEY_R:
+				magic_cube_3x3x3.turn("R")
+			elif event.keycode == KEY_U:
+				magic_cube_3x3x3.turn("U")
+			elif event.keycode == KEY_F:
+				magic_cube_3x3x3.turn("F")
+			elif event.keycode == KEY_L:
+				magic_cube_3x3x3.turn("L")
+			elif event.keycode == KEY_D:
+				magic_cube_3x3x3.turn("D")
+			elif event.keycode == KEY_B:
+				magic_cube_3x3x3.turn("B")
+
+
 func _on_sub_viewport_container_gui_input(event: InputEvent) -> void:
 	if event is InputEventMouseMotion:
-		cube_rotation_x += event.relative.y
-		cube_rotation_y += event.relative.x
+		if Input.is_mouse_button_pressed(MOUSE_BUTTON_LEFT):
+			cube_rotation_x += event.relative.y
+			cube_rotation_y += event.relative.x
 
 
 func _update_cube_rotation() -> void:
