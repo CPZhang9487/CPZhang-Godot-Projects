@@ -1,20 +1,5 @@
-[gd_scene load_steps=4 format=3 uid="uid://beh5wiwlsft3t"]
-
-[ext_resource type="Shader" path="res://Shaders/2d_to_2.5d.gdshader" id="1_4u3cs"]
-
-[sub_resource type="ShaderMaterial" id="ShaderMaterial_fbsxn"]
-shader = ExtResource("1_4u3cs")
-shader_parameter/rotation_x = 0.0
-shader_parameter/rotation_y = 0.0
-shader_parameter/rotation_z = 0.0
-
-[sub_resource type="CompressedTexture2D" id="CompressedTexture2D_83nqc"]
+[gd_scene format=3 uid="uid://beh5wiwlsft3t"]
 
 [node name="Test2D" type="Node2D"]
 position = Vector2(463, 167)
 metadata/_edit_group_ = true
-
-[node name="Cube" type="Sprite2D" parent="."]
-material = SubResource("ShaderMaterial_fbsxn")
-position = Vector2(-24, 6)
-texture = SubResource("CompressedTexture2D_83nqc")
