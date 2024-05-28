@@ -1,5 +1,22 @@
-[gd_scene format=3 uid="uid://beh5wiwlsft3t"]
+[gd_scene load_steps=4 format=3 uid="uid://beh5wiwlsft3t"]
+
+[ext_resource type="Script" path="res://Tools/draggable_2d.gd" id="1_eiol4"]
+[ext_resource type="Texture2D" uid="uid://b1e7caml7w3d2" path="res://icon.svg" id="2_yoslk"]
+
+[sub_resource type="RectangleShape2D" id="RectangleShape2D_atchj"]
+size = Vector2(100, 100)
 
 [node name="Test2D" type="Node2D"]
-position = Vector2(463, 167)
-metadata/_edit_group_ = true
+
+[node name="Node2D" type="Node2D" parent="."]
+
+[node name="Sprite2D" type="Sprite2D" parent="Node2D"]
+texture = ExtResource("2_yoslk")
+
+[node name="Draggable2D" type="Area2D" parent="Node2D"]
+monitoring = false
+monitorable = false
+script = ExtResource("1_eiol4")
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="Node2D/Draggable2D"]
+shape = SubResource("RectangleShape2D_atchj")
