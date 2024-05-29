@@ -1,26 +1,28 @@
-@tool
 class_name Draggable2D
 extends Area2D
 
 
-var _mouse_entered := false
-var _mouse_left_pressed_in_shape := false
+var can_be_dragged := false
+var is_dragged := false:
+	set(value):
+		if not is_dragged and not can_be_dragged:
+			value = false
+		is_dragged = value
+
+
+func _unhandled_input(event: InputEvent) -> void:
+	if event is InputEventMouseButton and event.button_index == MOUSE_BUTTON_LEFT:
+		is_dragged = event.pressed
+	if event is InputEventMouseMotion:
+		var parent = get_parent()
+		if is_dragged and parent and parent is Node2D:
+			parent.position += event.relative
+			get_viewport().set_input_as_handled()
 
 
 func _ready() -> void:
 	monitorable = false
 	monitoring = false
 
-	mouse_entered.connect(func(): _mouse_entered = true)
-	mouse_exited.connect(func(): _mouse_entered = false)
-
-
-func _input(event: InputEvent) -> void:
-	if _mouse_entered and event is InputEventMouseButton and event.button_index == MOUSE_BUTTON_LEFT:
-		_mouse_left_pressed_in_shape = event.pressed
-	if event is InputEventMouseMotion and _mouse_left_pressed_in_shape:
-		var parent = get_parent()
-		if not parent or not parent is Node2D:
-			print("Draggable2D should be added to Node2D.")
-		else:
-			parent.position += event.relative
+	mouse_entered.connect(func(): can_be_dragged = true)
+	mouse_exited.connect(func(): can_be_dragged = false)
